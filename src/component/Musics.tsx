@@ -78,7 +78,7 @@ const Musics = () => {
         }
     };
     const [giayton, setgiaystong] = useState(0)
-    const handleTimeUpdate = (index: any, event: any, name: any, image: any) => {
+    const handleTimeUpdate = ( event: any, name: any, image: any) => {
         setnameMusic(name);
         setimageMusic(image)
         const audioElement = event.target;
@@ -183,7 +183,7 @@ const Musics = () => {
                                                                 <h4 style={{ color: 'white' }}>{data.name}</h4>
                                                                 <p>10 November, 2019</p>
                                                             </div>
-                                                            <audio id={`audio-${index}`} preload="auto" onTimeUpdate={(event) => handleTimeUpdate(index, event, data.name, data.image)}>
+                                                            <audio id={`audio-${index}`} preload="auto" onTimeUpdate={(event) => handleTimeUpdate( event, data.name, data.image)}>
                                                                 <source src={data.file} />
                                                             </audio>
                                                             <hr />
