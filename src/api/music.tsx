@@ -50,10 +50,18 @@ const musicApi = createApi({
                 body: music
             }),
             invalidatesTags: ['Music']
+        }),
+        search: builder.mutation({
+            query: (music) => ({
+                url: `/musics/search`,
+                method: "POST",
+                body: music
+            }),
+            invalidatesTags: ['Music']
         })
     })
 })
 
 
-export const { useGetMusicQuery, useGetOneMusicQuery, useAddMusicMutation, useUpdateMusicMutation, useRemoveMusicMutation } = musicApi
+export const { useGetMusicQuery, useGetOneMusicQuery, useAddMusicMutation, useUpdateMusicMutation, useRemoveMusicMutation , useSearchMutation} = musicApi
 export default musicApi

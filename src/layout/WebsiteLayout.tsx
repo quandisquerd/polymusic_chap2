@@ -1,10 +1,53 @@
 
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import '../component/css/style.css'
 import './layout.css'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faSignInAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { useSearchMutation } from '../api/music';
+import Search from '../component/Search';
+import { pause } from '../util/pause';
 
 const WebsiteLayout = () => {
+    const [data, setdata]: any = useState([])
+    const [search, setsearch] = useState([])
+    const [searchs, { isLoading: searchLoading }] = useSearchMutation()
+    const [datasearch, setdatasearch] = useState([])
+    const [showSearchResult, setShowSearchResult] = useState(false);
+    const navigate = useNavigate()
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user')!)
+        setdata(user)
+    }, [])
+    const handleSearch = async (e: any) => {
+        setShowSearchResult(true);
+        e.preventDefault()
+        setdatasearch([])
+        searchs({ name: search })
+            .unwrap()
+            .then(async ({ data }) => {
+                setdatasearch(data)
+
+                await pause(500)
+                navigate('/search')
+
+            })
+    }
+    const isLogin = () => {
+        const accesstoken = data ? data.token : undefined;
+        if (accesstoken) {
+            return (
+                <><Link to="/profile" style={{ color: 'white' }}> <FontAwesomeIcon icon={faUser} /> {data?.user.name}</Link> </>
+            )
+        } else {
+            return (
+                <><Link to="/register" style={{ color: 'white', marginRight: '10px' }}> <FontAwesomeIcon icon={faUserPlus} color='white' /> Register</Link>
+                    <Link to="/login" style={{ color: 'white' }}> <FontAwesomeIcon icon={faSignInAlt} color='white' /> Login</Link></>
+            );
+        }
+
+    }
     return (
         <>
             <header>
@@ -15,14 +58,13 @@ const WebsiteLayout = () => {
                                 <div className="row align-items-center">
                                     <div className="col-xl-3 col-lg-2">
                                         <div className="logo">
-                                            <a href="index.html" style={{ display: "flex" }}>
+                                            <a href="/" style={{ display: "flex" }}>
                                                 <div className="loading" style={{ height: '90%' }}>
                                                     <span></span>
                                                     <span></span>
                                                     <span></span>
                                                     <span></span>
                                                     <span></span>
-
                                                 </div>
                                                 <p style={{ color: 'white', fontSize: '25px', marginTop: '8px', fontWeight: 'bold', marginLeft: '-20px' }}>Ketamin</p>
 
@@ -34,21 +76,8 @@ const WebsiteLayout = () => {
                                         <div className="main-menu  d-none d-lg-block">
                                             <nav>
                                                 <ul id="navigation">
-                                                    <li><a className="active" href="index.html">home</a></li>
-                                                    <li><a href="about.html">About</a></li>
-                                                    <li><a href="track.html">tracks</a></li>
-                                                    <li><a href="#">blog <i className="ti-angle-down"></i></a>
-                                                        <ul className="submenu">
-                                                            <li><a href="blog.html">blog</a></li>
-                                                            <li><a href="single-blog.html">single-blog</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">pages <i className="ti-angle-down"></i></a>
-                                                        <ul className="submenu">
-                                                            <li><a href="elements.html">elements</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="contact.html">Contact</a></li>
+                                                    <input type="text" placeholder="Search ...." id="searchInput" onChange={(e: any) => setsearch(e.target.value)} />
+                                                    <input type="button" value="Search" id="searchButton" onClick={handleSearch} />
                                                 </ul>
                                             </nav>
                                         </div>
@@ -56,9 +85,7 @@ const WebsiteLayout = () => {
                                     <div className="col-xl-3 col-lg-3 d-none d-lg-block">
                                         <div className="social_icon text-right">
                                             <ul>
-                                                <li><a href="#"> <i className="fa fa-facebook"></i> </a></li>
-                                                <li><a href="#"> <i className="fa fa-twitter"></i> </a></li>
-                                                <li><a href="#"> <i className="fa fa-instagram"></i> </a></li>
+                                                {isLogin()}
                                             </ul>
                                         </div>
                                     </div>
@@ -72,9 +99,14 @@ const WebsiteLayout = () => {
                     </div>
                 </div>
             </header>
-            <Outlet />
+            {showSearchResult ? (
+                <Search searchData={datasearch} loading={searchLoading} />
+            ) : (
+                <Outlet />
+            )}
+
+
         </>
     )
 }
-
 export default WebsiteLayout
