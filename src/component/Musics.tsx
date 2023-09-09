@@ -18,7 +18,8 @@ import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faFastForward } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import Bar from './Bar';
 const Musics = () => {
     const { data, isLoading } = useGetMusicQuery('')
     const [isPlaying, setIsPlaying] = useState(false);
@@ -32,6 +33,8 @@ const Musics = () => {
     const [nameMusic, setnameMusic] = useState('')
     const [imageMusic, setimageMusic] = useState('')
     const [indexs, setindex] = useState(0)
+    const [datas, setdatas] = useState([])
+    const [isBarVisible, setIsBarVisible] = useState(false);
     // Hàm để bắt đầu phát bài hát
     const playNextTrack = () => {
         const nextIndex = currentPlayingIndex + 1;
@@ -78,7 +81,7 @@ const Musics = () => {
         }
     };
     const [giayton, setgiaystong] = useState(0)
-    const handleTimeUpdate = ( event: any, name: any, image: any) => {
+    const handleTimeUpdate = (event: any, name: any, image: any) => {
         setnameMusic(name);
         setimageMusic(image)
         const audioElement = event.target;
@@ -107,40 +110,12 @@ const Musics = () => {
         setWidthPercentages(widthPercentage);
         setgiaytong(phanTram)
         setgiaystong(giaytong);
-    }
-    const handleFastForward = (increase: any) => {
-        const audioElement: any = document.getElementById(`audio-${indexs}`);
-        if (increase) {
-            let newTime = audioElement.currentTime + 5;
-            audioElement.currentTime = newTime;
-            let giays = Math.floor(newTime % 60);
-            setstartsec(giays)
-        } else {
-            let newTime = audioElement.currentTime - 5;
-            audioElement.currentTime = newTime;
-            let giays = Math.floor(newTime % 60);
-            setstartsec(giays)
+        const data: any = {
+            nameMusic: nameMusic, imageMusic: imageMusic, min: min, sec: sec, widthPercentages: widthPercentages, giaytongs: giaytongs, startmin: startmin, startsec: startsec, indexs: indexs, giayton: giayton, isPlaying: isPlaying, togglePlay: togglePlay
         }
+        setdatas(data)
+        setIsBarVisible(true);
     }
-    const [dragging, setDragging] = useState(false);
-
-    const handleMouseDown = () => {
-        setDragging(true);
-    };
-    const handleMouseUp = () => {
-        setDragging(false);
-    };
-    const handleMouseMove = (e: any) => {
-        if (!dragging) return;
-        const outerDiv: any = document.querySelector('.outer-div');
-        const newWidthPercent = (e.clientX - outerDiv.getBoundingClientRect().left) / outerDiv.clientWidth * 100;
-        const newtime = Number(giayton * newWidthPercent) / 100
-        const audioElement: any = document.getElementById(`audio-${indexs}`);
-        audioElement.currentTime = newtime
-        setWidthPercentages(Math.max(0, Math.min(100, newWidthPercent)));
-    };
-
-
     return (
         <>
             <div className="music_area music_gallery" style={{ backgroundColor: 'rgb(29, 29, 40)' }}>
@@ -183,7 +158,7 @@ const Musics = () => {
                                                                 <h4 style={{ color: 'white' }}>{data.name}</h4>
                                                                 <p>10 November, 2019</p>
                                                             </div>
-                                                            <audio id={`audio-${index}`} preload="auto" onTimeUpdate={(event) => handleTimeUpdate( event, data.name, data.image)}>
+                                                            <audio id={`audio-${index}`} preload="auto" onTimeUpdate={(event) => handleTimeUpdate(event, data.name, data.image)}>
                                                                 <source src={data.file} />
                                                             </audio>
                                                             <hr />
@@ -293,62 +268,7 @@ const Musics = () => {
                         }))}
                 </div>
             </div>
-            <div className="progress-bar-container" style={{ width: '100%', margin: '0px auto' }} >
-                <div
-                    style={{ width: '60%', display: 'flex', float: 'left', margin: '0px 19%' }}
-                >
-                    <div style={{
-                        width: '110px', marginLeft: '20px', marginTop: '24px'
-                    }}>
-                        <FontAwesomeIcon icon={faFastForward} flip="horizontal" style={{ marginRight: ' 20px', color: 'white', width: '10%' }} onClick={() => handleFastForward(false)} />
-
-                        {isPlaying ? <FontAwesomeIcon color='white' icon={faPause} onClick={() => togglePlay(currentPlayingIndex)} /> : <FontAwesomeIcon color='red' icon={faPlay} onClick={() => togglePlay(currentPlayingIndex)} />}
-
-                        <FontAwesomeIcon icon={faFastForward} style={{ marginLeft: '20px', color: 'white', width: '10%' }} onClick={() => handleFastForward(true)} />
-                    </div>
-                    <span style={{ color: 'red', marginTop: '27px', width: '40px', fontSize: '12px' }}>{startmin} :{startsec} </span>
-                    <div style={{ marginLeft: '15px', width: '60%', marginTop: '5px' }} className='outer' onMouseMove={handleMouseMove}
-                        onMouseUp={handleMouseUp}>
-                        <div
-                            style={{
-                                width: `${giaytongs}%`,
-                                height: '1px',
-                                backgroundColor: 'white',
-                                marginTop: '30px',
-                                marginBottom: '5px',
-                                position: 'relative',
-                                transition: 'width 0.2s',
-                            }}
-                            className="outer-div"
-
-
-                        >
-                            <div
-                                style={{
-                                    width: `${widthPercentages}%`,
-                                    height: '100%',
-                                    backgroundColor: 'red',
-                                    marginTop: '30px',
-                                    position: 'relative',
-                                    display: 'flex',
-                                    cursor: 'col-resize', // Hiển thị con trỏ khi kéo
-                                }}
-                                className="inner-div"
-                                onMouseDown={handleMouseDown}
-                            ></div>
-                        </div>
-                    </div>
-                    <span style={{ marginLeft: '20px', color: 'white', marginTop: '27px', width: '50px', fontSize: '12px' }}>{min} :{sec}</span>
-                    <div style={{
-                        width: '20%', marginLeft: '20px', marginTop: '25px', color: 'white', display: 'flex'
-                    }}>
-                        <img width='15%' height='20px' src={imageMusic} alt="" />
-                        <span style={{ marginLeft: '5px' }}> </span>
-                        <span style={{ fontSize: '12px' }}>{nameMusic}</span>
-                    </div>
-                </div>
-            </div>
-
+            {(isPlaying || isBarVisible) && <Bar data={datas} />}
         </>
     )
 }
