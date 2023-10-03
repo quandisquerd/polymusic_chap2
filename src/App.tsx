@@ -25,7 +25,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/admin" element={check()}>
+          <Route path="/admin" element={<AdminLayout/>}>
             <Route index element={<Dashboard />} />
             <Route path='dashboard' element={<Dashboard />} />
             <Route path="list" >
