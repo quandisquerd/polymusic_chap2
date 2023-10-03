@@ -13,14 +13,6 @@ import Profile from './component/Profile'
 import Register from './component/auth/Register'
 import Search from './component/Search'
 function App() {
-  const check = () => {
-    const user = JSON.parse(localStorage.getItem('user')!)
-    if (!user || user?.user.role == 'admin') {
-      return <AdminLayout />
-    } else {
-      return <Navigate to='/login' />
-    }
-  }
   return (
     <>
       <Router>
