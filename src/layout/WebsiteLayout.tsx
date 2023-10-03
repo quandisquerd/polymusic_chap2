@@ -50,7 +50,7 @@ const WebsiteLayout = () => {
     }
     return (
         <>
-            <button><a href="/admin">admin</a></button>
+          
             <header>
                 <div className="header-area " style={{ backgroundColor: "black", }}>
                     <div id="sticky-header" className="main-header-area">
