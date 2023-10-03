@@ -61,6 +61,7 @@ const Login = () => {
                         <Button className="form-submit-btn" style={{ paddingBottom: '30px' }} onClick={(e: any) => onSubmit(e)}>
                             {loginLoading ? 'Đang đăng nhập ...' : 'Đăng nhập'}
                         </Button>
+                          <button><a href="/admin">admin</a></button>
                     </form>
                 </div>
 
