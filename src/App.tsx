@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AdminLayout from './layout/AdminLayout'
 import Dashboard from './component/admin/Dashboard'
 import List from './component/admin/List'
