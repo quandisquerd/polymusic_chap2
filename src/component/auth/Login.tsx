@@ -58,6 +58,7 @@ const Login = () => {
                             <label htmlFor="password"> Password</label>
                             <input type="text" id="email" name="email" onChange={(e: any) => setpass(e.target.value)} />
                         </div>
+                        <p>Hãy Đăng Nhập Tài Khoản Admin Để Thêm Bài Hát Mới</p>
                         <Button className="form-submit-btn" style={{ paddingBottom: '30px' }} onClick={(e: any) => onSubmit(e)}>
                             {loginLoading ? 'Đang đăng nhập ...' : 'Đăng nhập'}
                         </Button>
