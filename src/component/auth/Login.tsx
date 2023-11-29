@@ -34,7 +34,7 @@ const Login = () => {
             .catch(error => {
                 messageApi.open({
                     type: 'error',
-                    content: error.data
+                    content: error.message
                 })
             })
     }
