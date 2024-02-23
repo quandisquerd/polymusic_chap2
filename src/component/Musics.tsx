@@ -15,14 +15,12 @@ import "./css/slicknav.css"
 import "./css/style.css"
 import './music.css'
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import Bar from './Bar';
 import ModelDetail from './ModelDetail';
 import { useGetAlbumQuery } from '../api/album';
-import Login from './auth/Login';
 const Musics = () => {
     const { data, isLoading } = useGetMusicQuery('')
     const [isPlaying, setIsPlaying] = useState(false);
@@ -261,7 +259,6 @@ const Musics = () => {
                                                         </Button>
                                                         <h4> </h4>
                                                         <ModelDetail data={data} index={index} onId={onClickid}/>
-                                                        {/* <Button className="boxed-btn" style={{ height: '50px', width: '120px' }}><Link to={`${data.id}`}>Detail</Link></Button> */}
                                                     </div>
                                                 </div>
                                             </div>
