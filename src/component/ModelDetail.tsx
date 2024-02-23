@@ -1,12 +1,11 @@
 import { Button, ConfigProvider, Modal } from "antd"
 import { useState } from "react";
-import { Link } from "react-router-dom"
 import { useGetOneMusicQuery } from "../api/music";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause } from "@fortawesome/free-solid-svg-icons";
 
 const ModelDetail = ({ data, index, onId }: any) => {
-    const { data: music, isLoading } = useGetOneMusicQuery(data?.id)
+    const { data: music } = useGetOneMusicQuery(data?.id)
     console.log(music);
 
     const [open, setOpen] = useState(false);
