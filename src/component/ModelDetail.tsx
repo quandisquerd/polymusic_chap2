@@ -5,12 +5,11 @@ import { useGetOneMusicQuery } from "../api/music";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause } from "@fortawesome/free-solid-svg-icons";
 
-const ModelDetail = ({ data,index ,onId}: any) => {
+const ModelDetail = ({ data, index, onId }: any) => {
     const { data: music, isLoading } = useGetOneMusicQuery(data?.id)
     console.log(music);
 
     const [open, setOpen] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false);
     const [modalText, setModalText] = useState(data?.name);
 
     const showModal = () => {
@@ -18,16 +17,16 @@ const ModelDetail = ({ data,index ,onId}: any) => {
     };
 
     const handleOk = () => {
-       
-            setOpen(false);
-         
-       
+        setModalText('ok')
+        setOpen(false);
+
+
     };
 
     const handleCancel = () => {
         setOpen(false);
     };
-    const onClickButton=()=>{
+    const onClickButton = () => {
         onId(index)
     }
     return (
@@ -37,12 +36,12 @@ const ModelDetail = ({ data,index ,onId}: any) => {
                 components: {
                     Modal: {
                         contentBg: '#333333',
-                        headerBg:'#333333',
-                        titleColor:'white'
-                        
+                        headerBg: '#333333',
+                        titleColor: 'white'
+
                     },
                 },
-                token:{
+                token: {
                     colorPrimaryBorder: '#990000',
                 }
             }}
@@ -51,21 +50,20 @@ const ModelDetail = ({ data,index ,onId}: any) => {
                     title="Music"
                     open={open}
                     onOk={handleOk}
-                    confirmLoading={confirmLoading}
                     onCancel={handleCancel}
 
                 >
-                    <p style={{color:'white'}}>{modalText}</p>
+                    <p style={{ color: 'white' }}>{modalText}</p>
                     <div>
-                        <Button  style={{ height: '60px', width: '60px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center',backgroundColor: 'red',borderColor: 'red'}} onClick={onClickButton}>
-                            <FontAwesomeIcon color='white' icon={faPause} style={{fontSize:'30px'}} />
+                        <Button style={{ height: '60px', width: '60px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red', borderColor: 'red' }} onClick={onClickButton}>
+                            <FontAwesomeIcon color='white' icon={faPause} style={{ fontSize: '30px' }} />
                         </Button>
 
                     </div>
                 </Modal>
             </ConfigProvider>
 
-          
+
 
         </>
     )
