@@ -20,6 +20,9 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import Bar from './Bar';
+import ModelDetail from './ModelDetail';
+import { useGetAlbumQuery } from '../api/album';
+import Login from './auth/Login';
 const Musics = () => {
     const { data, isLoading } = useGetMusicQuery('')
     const [isPlaying, setIsPlaying] = useState(false);
@@ -116,6 +119,11 @@ const Musics = () => {
         setdatas(data)
         setIsBarVisible(true);
     }
+    const {data:album} = useGetAlbumQuery(0)
+    const onClickid=(id:any)=>{
+       togglePlay(id)
+       
+    }
     return (
         <>
             <div className="music_area music_gallery" style={{ backgroundColor: 'rgb(29, 29, 40)' }}>
@@ -143,6 +151,7 @@ const Musics = () => {
                     </div>
                         <h1 style={{ paddingTop: '500px' }}></h1></>) : (data?.data?.map((data: any, index: any) => {
                             const isCurrentPlaying = index === currentPlayingIndex;
+                            const nameAlbum = album?.data?.find((cat: any) => cat?.id === data?.album_id)?.name
                             return (
                                 <>
                                     <div className="row align-items-center justify-content-center mb-20">
@@ -156,7 +165,7 @@ const Musics = () => {
                                                         <div className="audio_name">
                                                             <div className="name">
                                                                 <h4 style={{ color: 'white' }}>{data.name}</h4>
-                                                                <p>10 November, 2019</p>
+                                                                <p>{nameAlbum}</p>
                                                             </div>
                                                             <audio id={`audio-${index}`} preload="auto" onTimeUpdate={(event) => handleTimeUpdate(event, data.name, data.image)}>
                                                                 <source src={data.file} />
@@ -251,7 +260,8 @@ const Musics = () => {
                                                             {isCurrentPlaying && isPlaying ? <FontAwesomeIcon color='white' icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
                                                         </Button>
                                                         <h4> </h4>
-                                                        <Button className="boxed-btn" style={{ height: '50px', width: '120px' }}><Link to={`${data.id}`}>Detail</Link></Button>
+                                                        <ModelDetail data={data} index={index} onId={onClickid}/>
+                                                        {/* <Button className="boxed-btn" style={{ height: '50px', width: '120px' }}><Link to={`${data.id}`}>Detail</Link></Button> */}
                                                     </div>
                                                 </div>
                                             </div>
