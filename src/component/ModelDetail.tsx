@@ -1,13 +1,12 @@
 import { Button, ConfigProvider, Modal } from "antd"
 import { useState } from "react";
-import { useGetOneMusicQuery } from "../api/music";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause } from "@fortawesome/free-solid-svg-icons";
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
-const ModelDetail = ({ data, index, onId }: any) => {
-    const { data: music } = useGetOneMusicQuery(data?.id)
-    console.log(music);
-
+const ModelDetail = ({ data, index, onId, isCurrentPlaying, isPlaying, currentPlayingIndex, onIndex }: any) => {
+    const togglePlay = (index: any) => {
+        onIndex(index)
+    }
     const [open, setOpen] = useState(false);
     const [modalText, setModalText] = useState(data?.name);
 
@@ -16,7 +15,6 @@ const ModelDetail = ({ data, index, onId }: any) => {
     };
 
     const handleOk = () => {
-        setModalText('ok')
         setOpen(false);
 
 
@@ -25,9 +23,6 @@ const ModelDetail = ({ data, index, onId }: any) => {
     const handleCancel = () => {
         setOpen(false);
     };
-    const onClickButton = () => {
-        onId(index)
-    }
     return (
         <>
             <Button className="boxed-btn" style={{ height: '50px', width: '120px' }} onClick={showModal}>Detail</Button>
@@ -54,8 +49,8 @@ const ModelDetail = ({ data, index, onId }: any) => {
                 >
                     <p style={{ color: 'white' }}>{modalText}</p>
                     <div>
-                        <Button style={{ height: '60px', width: '60px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red', borderColor: 'red' }} onClick={onClickButton}>
-                            <FontAwesomeIcon color='white' icon={faPause} style={{ fontSize: '30px' }} />
+                        <Button className="boxed-btn" style={{ height: '50px', width: '120px', backgroundColor: currentPlayingIndex === index && isPlaying ? 'red' : 'white' }} onClick={() => togglePlay(index)}>
+                            {isCurrentPlaying && isPlaying ? <FontAwesomeIcon color='white' icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
                         </Button>
 
                     </div>
