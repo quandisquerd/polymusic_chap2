@@ -244,4 +244,37 @@ audio::-webkit-media-controls-start-playback-button {
     animation-delay: -0.1s;
 }
 
+@keyframes blink {
+    0% {
+        background-color: black;
+    }
 
+    50% {
+        background-color: white;
+    }
+
+    100% {
+        background-color: black;
+    }
+}
+
+.music_area.music_gallery {
+    /* Other styles if any */
+}
+
+.blinking-background {
+    animation: blink 0.1s infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinning {
+    animation: spin 2s linear infinite;
+}
