@@ -5,7 +5,7 @@ import ModelDetail from '../ModelDetail'
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 
 
-const Song = ({ nameAlbum, data, index, isCurrentPlaying, isPlaying, giaytongs, widthPercentages, startmin, startsec, currentPlayingIndex, ontogglePlay, min, sec, onIndex, onTime , onActive, active}: any) => {
+const Song = ({ nameAlbum, data, index, isCurrentPlaying, isPlaying, giaytongs, widthPercentages, startmin, startsec, currentPlayingIndex, ontogglePlay, min, sec, onIndex, onTime , onActive}: any) => {
     const onClickid = (id: any) => {
         ontogglePlay(id)
     
