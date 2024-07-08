@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
-const ModelDetail = ({ data, index, onId, isCurrentPlaying, isPlaying, currentPlayingIndex, onIndex }: any) => {
+const ModelDetail = ({ data, index, isCurrentPlaying, isPlaying, currentPlayingIndex, onIndex }: any) => {
     const togglePlay = (index: any) => {
         onIndex(index)
     }
@@ -16,8 +16,6 @@ const ModelDetail = ({ data, index, onId, isCurrentPlaying, isPlaying, currentPl
 
     const handleOk = () => {
         setOpen(false);
-
-
     };
 
     const handleCancel = () => {
