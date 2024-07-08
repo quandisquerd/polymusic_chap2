@@ -51,14 +51,14 @@ const Song = ({ nameAlbum, data, index, isCurrentPlaying, isPlaying, giaytongs, 
                                   {isCurrentPlaying ? <div className='tong' style={{ width: `${giaytongs}%`, height: '3px', backgroundColor: 'white', marginTop: '30px', position: 'relative', }} >
                                       <div style={{ width: `${widthPercentages}%`, height: '100%', backgroundColor: 'red', marginTop: '30px', position: 'relative', }}><div className="child"
                                           style={{
-                                              position: 'absolute', // Để có thể định vị phần tử con theo vị trí tuyệt đối
-                                              top: '-5px', // Điều chỉnh vị trí theo y (lên trên)
-                                              right: '0', // Điều chỉnh vị trí theo x (phải)
-                                              width: '10px', // Độ rộng của chấm đỏ
-                                              height: '10px', // Chiều cao của chấm đỏ
+                                              position: 'absolute',
+                                              top: '-5px',
+                                              right: '0', 
+                                              width: '10px',
+                                              height: '10px', 
                                               backgroundColor: 'bue',
-                                              borderRadius: '50%', // Để tạo hình tròn
-                                              display: 'none', // Ẩn ban đầu
+                                              borderRadius: '50%', 
+                                              display: 'none', 
                                           }}
                                       ></div> </div>
                                   </div> : <div style={{ width: `100%`, height: '3px', backgroundColor: 'white', marginTop: '30px' }}></div>}
