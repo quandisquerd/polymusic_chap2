@@ -12,6 +12,7 @@ const ModelDetail = ({ data, index, isCurrentPlaying, isPlaying, currentPlayingI
 
     const showModal = () => {
         setOpen(true);
+        setModalText(data?.name)
     };
 
     const handleOk = () => {
